@@ -1,3 +1,8 @@
+using E_learning_Platform.Data;
+using E_learning_Platform.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace E_learning_Platform
 {
 	public class Program
@@ -8,6 +13,16 @@ namespace E_learning_Platform
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+			{
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+			});
+			builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+				.AddEntityFrameworkStores<ApplicationDbContext>();
+			//builder.Services.ConfigureApplicationCookie(options =>
+			//{
+			//	options.LoginPath = "User/Login";
+			//});
 
 			var app = builder.Build();
 
@@ -24,7 +39,8 @@ namespace E_learning_Platform
 
 			app.UseRouting();
 
-			app.UseAuthorization();
+			app.UseAuthentication();
+            app.UseAuthorization();
 
 			app.MapControllerRoute(
 				name: "default",

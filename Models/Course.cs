@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace E_learning_Platform.Models
 {
     public class Course
     {
-        [Required]
-        int Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage ="Course Name is required")]
         [StringLength(maximumLength:100, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 100 characters")]
@@ -36,7 +36,7 @@ namespace E_learning_Platform.Models
         [Range(20, 10000, ErrorMessage = "Price must be between 20 and 10,000")]
         public decimal Price {  get; set; }
 
-
+        public IEnumerable<ApplicationUser> Users { get; set; }
 
 
     }
