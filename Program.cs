@@ -19,6 +19,11 @@ namespace E_learning_Platform
 			});
 			builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>()
 				.AddEntityFrameworkStores<ApplicationDbContext>();
+			//builder.Services.ConfigureApplicationCookie(options =>
+			//{
+			//	options.LoginPath = "User/Login";
+			//});
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -34,7 +39,7 @@ namespace E_learning_Platform
 
 			app.UseRouting();
 
-
+			app.UseAuthentication();
             app.UseAuthorization();
 
 			app.MapControllerRoute(
