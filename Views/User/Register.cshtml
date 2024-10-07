@@ -1,52 +1,59 @@
 ﻿@model UserRegisterViewModel
+@{
+    Layout = null;
+}
 
-<div class="container-fluid h-75">
-    <div class="row h-100 d-flex align-items-center">
-        <div class="col-md-12 card p-0 shadow rounded-18">
-            <div class="card-header bg-success w-100">
-                <h3 class="text-light text-center">Create Account</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="~/css/form-style.css">
+
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="~/images/Logo.png" />
+        <form asp-action="Register" method="post">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            @* <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" /> *@
+            <div class="input-group mb-4">
+                <label asp-for="FirstName"></label>
+                <input class="form-control" asp-for="FirstName" placeholder="" />
+                <span class="text-danger" class="text-da" asp-validation-for="FirstName"></span>
             </div>
-            <div class="card-body">
-                <form asp-action="Register" method="post">
-                    <div class="text-danger" asp-validation-summary="All"></div>
-                    @* <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" /> *@
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="FirstName" placeholder="abc@mymail.com" />
-                        <label asp-for="FirstName"></label>
-                        <span  class="text-danger" class="text-da" asp-validation-for="FirstName"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="LastName" placeholder="abc@mymail.com" />
-                        <label asp-for="LastName"></label>
-                        <span  class="text-danger" asp-validation-for="LastName"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="Email" placeholder="abc@mymail.com" />
-                        <label asp-for="Email"></label>
-                        <span  class="text-danger" asp-validation-for="Email"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="Password" placeholder="" />
-                        <label asp-for="Password"></label>
-                        <span  class="text-danger" asp-validation-for="Password"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="ConfirmPassword" placeholder="" />
-                        <label asp-for="ConfirmPassword"></label>
-                        <span  class="text-danger" asp-validation-for="ConfirmPassword"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <select name="selectedRoleId" class="form-select w-100" asp-items="@Model.Roles">
-                            <option> Select Role</option>
-                        </select>
-                        <span  class="text-danger" asp-validation-for="Roles"></span>
-                    </div>
-                    <div class="w-100">
-                        <button class="w-100 btn btn-success d-block rounded-8 mb-2" type="submit">Register</button>
-                        Has account? <a asp-action="Login">Login</a>
-                    </div>
-                </form>
+            <div class="input-group mb-4">
+                <label asp-for="LastName"></label>
+                <input class="form-control rounded-8" asp-for="LastName" placeholder="" />
+                <span class="text-danger" asp-validation-for="LastName"></span>
             </div>
-        </div>
+            <div class="input-group mb-4">
+                <label asp-for="Email"></label>
+                <input class="form-control rounded-8" asp-for="Email" placeholder="" />
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+            <div class="input-group mb-4">
+                <label asp-for="Password"></label>
+                <input class="form-control rounded-8" asp-for="Password" placeholder="" />
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <div class="input-group mb-4">
+                <label asp-for="ConfirmPassword"></label>
+                <input class="form-control rounded-8" asp-for="ConfirmPassword" placeholder="" />
+                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+            </div>
+            <div class="input-group mb-4">
+                <select name="selectedRoleId" class="form-select w-100" asp-items="@Model.Roles">
+                    <option> Select Role</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Roles"></span>
+            </div>
+            <div class="w-100">
+                <button class="w-100 btn btn-success d-block rounded-8 mb-2" type="submit">Register</button>
+                <span>Already have an account ? <a asp-action="Login">Log In</a></span>
+            </div>
+        </form>
     </div>
-</div>
+</body>
+</html>
