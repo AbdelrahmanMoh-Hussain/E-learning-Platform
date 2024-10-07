@@ -1,5 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model UserRegisterViewModel
+
+<div class="container-fluid h-75">
+    <div class="row h-100 d-flex align-items-center">
+        <div class="col-md-12 card p-0 shadow rounded-18">
+            <div class="card-header bg-success w-100">
+                <h3 class="text-light text-center">Create Account</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Register" method="post">
+                    <div class="text-danger" asp-validation-summary="All"></div>
+                    @* <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" /> *@
+                    <div class="form-floating mb-4">
+                        <input class="form-control rounded-8" asp-for="FirstName" placeholder="abc@mymail.com" />
+                        <label asp-for="FirstName"></label>
+                        <span  class="text-danger" class="text-da" asp-validation-for="FirstName"></span>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input class="form-control rounded-8" asp-for="LastName" placeholder="abc@mymail.com" />
+                        <label asp-for="LastName"></label>
+                        <span  class="text-danger" asp-validation-for="LastName"></span>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input class="form-control rounded-8" asp-for="Email" placeholder="abc@mymail.com" />
+                        <label asp-for="Email"></label>
+                        <span  class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input class="form-control rounded-8" asp-for="Password" placeholder="" />
+                        <label asp-for="Password"></label>
+                        <span  class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input class="form-control rounded-8" asp-for="ConfirmPassword" placeholder="" />
+                        <label asp-for="ConfirmPassword"></label>
+                        <span  class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <select name="selectedRoleId" class="form-select w-100" asp-items="@Model.Roles">
+                            <option> Select Role</option>
+                        </select>
+                        <span  class="text-danger" asp-validation-for="Roles"></span>
+                    </div>
+                    <div class="w-100">
+                        <button class="w-100 btn btn-success d-block rounded-8 mb-2" type="submit">Register</button>
+                        Has account? <a asp-action="Login">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

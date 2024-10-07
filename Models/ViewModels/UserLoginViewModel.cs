@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace E_learning_Platform.Models.ViewModel
+namespace E_learning_Platform.Models.ViewModels
 {
     public class UserLoginViewModel
     {
