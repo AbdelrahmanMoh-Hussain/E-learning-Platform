@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_learning_Platform.Controllers
 {
-	public class UserController : Controller
+	public class AccountController : Controller
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<IdentityRole<int>> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 
-		public UserController(UserManager<ApplicationUser> userManager, 
+		public AccountController(UserManager<ApplicationUser> userManager, 
 			RoleManager<IdentityRole<int>> roleManager, 
 			SignInManager<ApplicationUser> signInManager)
 		{
@@ -35,6 +35,7 @@ namespace E_learning_Platform.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(UserRegisterViewModel userRegister, string selectedRoleId)
 		{
 			if (!ModelState.IsValid)
@@ -95,7 +96,12 @@ namespace E_learning_Platform.Controllers
 				ModelState.AddModelError("", "Invaild Email or Password");
 			}
 			return View(userLogin);
+		}
 
+		public async Task<IActionResult> Logout()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }
