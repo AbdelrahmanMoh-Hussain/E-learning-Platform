@@ -1,32 +1,39 @@
 ﻿@model UserLoginViewModel
+@{
+    Layout = null;
+}
 
-<div class="container-fluid h-75">
-    <div class="row h-100 d-flex align-items-center">
-        <div class="col-md-12 card p-0 shadow rounded-18">
-            <div class="card-header bg-success w-100">
-                <h3 class="text-light text-center">Login</h3>
-            </div>
-            <div class="card-body">
-                <form asp-action="Login" method="post">
-                    <div class="text-danger fs-5" asp-validation-summary="All"></div>
-                    <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" />
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="Email" placeholder="abc@mymail.com" />
-                        <label asp-for="Email"></label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="~/css/form-style.css">
 
-                        <span asp-validation-for="Email"></span>
-                    </div>
-                    <div class="form-floating mb-4">
-                        <input class="form-control rounded-8" asp-for="Password" placeholder="" />
-                        <label asp-for="Password"></label>
-                        <span asp-validation-for="Password"></span>
-                    </div>
-                    <div class="w-100">
-                        <button class="w-100 btn btn-success d-block rounded-8 mb-2" type="submit">Log In</button>
-                        <a href="#">Create account!</a>
-                    </div>
-                </form>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="~/images/Logo.png" />
+        <form asp-action="Login" method="post">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" />
+            <div class="form-floating mb-4">
+                <label asp-for="Email"></label>
+                <input class="form-control rounded-8" asp-for="Email" placeholder="abc@mymail.com" />
+
+                <span class="text-danger" asp-validation-for="Email"></span>
             </div>
-        </div>
+            <div class="form-floating mb-4">
+                <label asp-for="Password"></label>
+                <input class="form-control rounded-8" asp-for="Password" placeholder="" />
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <div class="w-100">
+                <button class="w-100 btn btn-success d-block rounded-8 mb-2" type="submit">Log In</button>
+                <span>Don't have an account! <a asp-action="Register">Create account</a></span>
+            </div>
+        </form>
     </div>
-</div>
+</body>
+</html>
