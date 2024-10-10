@@ -34,6 +34,13 @@ namespace E_learning_Platform.Data
 			modelBuilder.Entity<Course>().HasMany(c => c.Users)
 				.WithMany(u => u.Courses)
 				.UsingEntity<StudentCourseCart>();
+
+            modelBuilder.Entity<IdentityRole<int>>()
+                .HasData(new[] 
+                {
+                    new IdentityRole<int> {Id= 1, Name = "admin", NormalizedName = "admin".ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+                    new IdentityRole<int> { Id = 2, Name = "student", NormalizedName = "student".ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+                });
 		}
     }
 }
