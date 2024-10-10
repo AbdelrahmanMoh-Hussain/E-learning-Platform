@@ -17,7 +17,7 @@
         <img class="logo" src="~/images/Logo.png" />
         <form asp-action="Register" method="post">
             <div class="text-danger" asp-validation-summary="All"></div>
-            @* <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" /> *@
+            <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" />
             <div class="input-group mb-4">
                 <label asp-for="FirstName"></label>
                 <input class="form-control" asp-for="FirstName" placeholder="" />

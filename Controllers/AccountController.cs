@@ -22,9 +22,10 @@ namespace E_learning_Platform.Controllers
 			_signInManager = signInManager;
 		}
 
-		public IActionResult Register()
+		public IActionResult Register(string? returnUrl)
 		{
-			UserRegisterViewModel userRegisterViewModel = new UserRegisterViewModel
+            ViewBag.ReturnUrl = returnUrl ?? "/";
+            UserRegisterViewModel userRegisterViewModel = new UserRegisterViewModel
 			{
 				Roles = _roleManager.Roles
 					.Select(x => new SelectListItem { 
@@ -36,7 +37,8 @@ namespace E_learning_Platform.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Register(UserRegisterViewModel userRegister, string selectedRoleId)
+		public async Task<IActionResult> Register(UserRegisterViewModel userRegister, 
+			string selectedRoleId, string? returnUrl)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -67,7 +69,7 @@ namespace E_learning_Platform.Controllers
             }
             await _signInManager.PasswordSignInAsync(user, userRegister.Password, false, false);
 
-            return RedirectToAction("Index", "Home");
+            return Redirect(returnUrl ?? "/");
 
         }
 

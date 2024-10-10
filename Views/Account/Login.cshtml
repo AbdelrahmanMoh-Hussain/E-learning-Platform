@@ -31,7 +31,7 @@
             </div>
             <div class="w-100">
                 <button class="w-100 btn btn-success d-block rounded-8 mb-2" type="submit">Log In</button>
-                <span>Don't have an account! <a asp-action="Register">Create account</a></span>
+                <span>Don't have an account! <a asp-action="Register" asp-route-returnUrl="@ViewBag.ReturnUrl">Create account</a></span>
             </div>
         </form>
     </div>
