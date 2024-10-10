@@ -4,6 +4,7 @@ using E_learning_Platform.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_learning_Platform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241010114905_Add_CartTable")]
+    partial class Add_CartTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,7 +143,7 @@ namespace E_learning_Platform.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("E_learning_Platform.Models.Enrollement", b =>
@@ -158,7 +161,7 @@ namespace E_learning_Platform.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Enrollement", (string)null);
+                    b.ToTable("Enrollement");
                 });
 
             modelBuilder.Entity("E_learning_Platform.Models.StudentCourseCart", b =>
@@ -178,7 +181,7 @@ namespace E_learning_Platform.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("StudentCourseCart", (string)null);
+                    b.ToTable("StudentCourseCart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
