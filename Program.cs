@@ -1,4 +1,6 @@
 using E_learning_Platform.Data;
+using E_learning_Platform.Data.Repository;
+using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,8 @@ namespace E_learning_Platform
 			//{
 			//	options.LoginPath = "User/Login";
 			//});
+			builder.Services.AddScoped<ICartRepository, CartRepository>();
+			builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 
 			var app = builder.Build();
 

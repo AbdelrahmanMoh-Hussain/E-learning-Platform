@@ -1,6 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h2>@Model</h2>
+﻿@model IEnumerable<Course>
+<h2>Shopping Cart</h2>
+<p>2 Courses in the cart</p>
+<div class="container overflow-auto">
+    <div class="row mb-5 ">
+        <hr class="w-100 text-center"/>
+        <div class="col-10 d-flex flex-wrap">
+            <img src="" width="100" height="100" />
+            <div class="details ms-2">
+                <p class="mb-0 text-truncate">TITTLEasdadasdasdasasdasasdas</p>
+                <p class="mb-0">By Instructor</p>
+            </div>
+        </div>
+        <div class="col-2 text-center">
+            <p class="mb-2">20.00$</p>
+            <a class="text-decoration-underline remove-btn" onClick=Delete('/cart/removecourse/1')>Remove</a>
+        </div>
+    </div>
+    
+</div>
+<div class="d-flex justify-content-end align-items-center p-1">
+    <p class="m-0">Total Price: <span>100$</span></p>
+    <a class="btn btn-success ms-4" >Check Out</a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        
+        const removeBtn = document.querySelector('.remove-btn')
+        function Delete(url) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        success: function (data) {
+                            removeBtn.parentElement.parentElement.remove();
+                        }
+                    })
+                }
+            })
+        }
+        
+    </script>
+
+} 

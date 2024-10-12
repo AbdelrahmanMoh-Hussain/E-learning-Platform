@@ -7,9 +7,9 @@ namespace E_learning_Platform.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
-        DbSet<Course> Course { get; set; }
-        DbSet<Enrollement> Enrollement { get; set; }
-        DbSet<StudentCourseCart> StudentCourseCart { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Enrollement> Enrollement { get; set; }
+        public DbSet<StudentCourseCart> StudentCourseCart { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options) 
