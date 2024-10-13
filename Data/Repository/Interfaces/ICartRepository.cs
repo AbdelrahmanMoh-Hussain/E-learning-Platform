@@ -6,5 +6,6 @@ namespace E_learning_Platform.Data.Repository.Interfaces
     {
         public IEnumerable<Course?> GetUserCartCourses(int userId);
         public Task<bool> RemoveCourseFromUserCartAsync(int courseId, int userId);
+        public Task<bool> AddToCartAsync(int courseId, int userId);
     }
 }

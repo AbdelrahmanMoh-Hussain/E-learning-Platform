@@ -27,9 +27,11 @@ namespace E_learning_Platform.Controllers
 
         public async Task<IActionResult> Index()
 		{
+            
 			var userId = await GetSignedInUserIdAsync();
 			var cartCourses = _cartRepository.GetUserCartCourses(userId);
-			return View(cartCourses);
+
+            return View(cartCourses);
 		}
 
 		[HttpPost]
@@ -54,7 +56,7 @@ namespace E_learning_Platform.Controllers
                 return Json(new { success = false });
 
             var userCourses = _cartRepository.GetUserCartCourses(userId);
-            if (userCourses == null)
+            if (userCourses == null || userCourses.Count() == 0)
                 return Json(new { success = false });
 
             var result = _enrollmentRepository.AddEnrollments(userId, userCourses);
@@ -62,6 +64,16 @@ namespace E_learning_Platform.Controllers
                 return Json(new { success = false });
 
             return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int courseId)
+        {
+            var user = await _userManager.FindByNameAsync(_userManager.GetUserName(User));
+            if (user == null) 
+                return Json(new { success = false });
+            var result = await _cartRepository.AddToCartAsync(courseId, user.Id);
+            return Json(new { success = result });
         }
         private async Task<int> GetSignedInUserIdAsync()
 		{
