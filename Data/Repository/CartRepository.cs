@@ -13,9 +13,11 @@ namespace E_learning_Platform.Data.Repository
             _context = context;
         }
 
+        
+
         public IEnumerable<Course?> GetUserCartCourses(int userId)
         {
-            var coursesId = _context.StudentCourseCart.Where(c => c.UserId == userId)
+            var coursesId = _context.UserCoursesCart.Where(c => c.UserId == userId)
                                 .Select(c => c.CourseId)
                                 .ToList();
 
@@ -32,11 +34,21 @@ namespace E_learning_Platform.Data.Repository
 
         public async Task<bool> RemoveCourseFromUserCartAsync(int courseId, int userId)
         {
-            _context.StudentCourseCart.Remove(new StudentCourseCart { CourseId = courseId, UserId = userId });
+            _context.UserCoursesCart.Remove(new UserCoursesCart { CourseId = courseId, UserId = userId });
+            var effectedRows = await _context.SaveChangesAsync();
+            return effectedRows > 0;
+        }
+        public async Task<bool> AddToCartAsync(int courseId, int userId)
+        {
+            var cart = new UserCoursesCart{ CourseId = courseId, UserId = userId };
+            if (_context.UserCoursesCart.Contains(cart))
+            {
+                return false;
+            }
+            await _context.UserCoursesCart.AddAsync(new UserCoursesCart { CourseId = courseId, UserId = userId });
             var effectedRows = await _context.SaveChangesAsync();
             return effectedRows > 0;
         }
 
-        
     }
 }

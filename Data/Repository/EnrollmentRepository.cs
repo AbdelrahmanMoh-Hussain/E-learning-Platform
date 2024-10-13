@@ -25,7 +25,7 @@ namespace E_learning_Platform.Data.Repository
 
                 };
                 _context.Enrollement.Add(enrollment);
-                _context.StudentCourseCart.Remove(new StudentCourseCart { CourseId = course.Id, UserId = userId });
+                _context.UserCoursesCart.Remove(new UserCoursesCart { CourseId = course.Id, UserId = userId });
                 var effectedRows = _context.SaveChanges();
                 if(effectedRows > 0)
                 {

@@ -27,6 +27,7 @@ namespace E_learning_Platform
 			//});
 			builder.Services.AddScoped<ICartRepository, CartRepository>();
 			builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+			builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
 			var app = builder.Build();
 
