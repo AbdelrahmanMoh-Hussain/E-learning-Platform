@@ -1,5 +1,6 @@
 ﻿using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_learning_Platform.Data.Repository
 {
@@ -29,15 +30,11 @@ namespace E_learning_Platform.Data.Repository
             return courses;
         }
 
-        public void RemoveCourseFromUserCart(int courseId, int userId)
+        public async Task<bool> RemoveCourseFromUserCartAsync(int courseId, int userId)
         {
-            var cartItemToRemove = _context.StudentCourseCart
-                .FirstOrDefault(c => c.UserId == userId && c.CourseId == courseId);
-            if (cartItemToRemove == null)
-                return;
-
-            _context.StudentCourseCart.Remove(cartItemToRemove);
-            _context.SaveChanges();
+            _context.StudentCourseCart.Remove(new StudentCourseCart { CourseId = courseId, UserId = userId });
+            var effectedRows = await _context.SaveChangesAsync();
+            return effectedRows > 0;
         }
 
         
