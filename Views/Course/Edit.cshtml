@@ -1,14 +1,17 @@
 ﻿@model Course
+
 @{
-    ViewData["Title"] = "Edit";
+    Layout = "/Views/Shared/adminLayout.cshtml";
+    ViewData["Title"] = "Edit Course";
 }
 
-<h1>Edit @Model.Name </h1>
-
-
 <div class="container mt-4">
-    <form method="post" asp-action="SaveEdit"  class="needs-validation" novalidate>
+    <h1 class="text-center mb-4">Edit Course - @Model.Name</h1>
+
+    <form method="post" asp-action="SaveEdit" class="needs-validation" novalidate>
         <input asp-for="Id" type="hidden" />
+
+        <!-- Course Name and Instructor Name -->
         <div class="row mb-3">
             <div class="col-md-6">
                 <label asp-for="Name" class="form-label fw-bold">Course Name</label>
@@ -23,6 +26,7 @@
             </div>
         </div>
 
+        <!-- Course Description -->
         <div class="row mb-3">
             <div class="col-md-12">
                 <label asp-for="Description" class="form-label fw-bold">Course Description</label>
@@ -31,6 +35,7 @@
             </div>
         </div>
 
+        <!-- Course Rate and Price -->
         <div class="row mb-3">
             <div class="col-md-6">
                 <label asp-for="CourseRate" class="form-label fw-bold">Course Rate</label>
@@ -45,6 +50,7 @@
             </div>
         </div>
 
+        <!-- Field of Study and Image URL -->
         <div class="row mb-3">
             <div class="col-md-6">
                 <label asp-for="FieldOfStudy" class="form-label fw-bold">Field of Study</label>
@@ -59,12 +65,14 @@
             </div>
         </div>
 
+        <!-- Update Button -->
         <div class="text-center">
-            <button type="submit" class="btn btn-warning btn-lg px-5">Update</button>
+            <button type="submit" class="btn btn-warning btn-lg px-5">Update Course</button>
         </div>
     </form>
 </div>
 
+<!-- External Validation Scripts -->
 <script src="/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

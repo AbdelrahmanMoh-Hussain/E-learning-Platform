@@ -1,50 +1,64 @@
 ﻿@model List<Course>
 
 @{
+    Layout = "/Views/Shared/adminLayout.cshtml";
     ViewData["Title"] = "Courses";
 }
 
-<h1>All Courses</h1>
-<a type="button" class="btn btn-primary" asp-action="AddCourse" asp-controller="Course">Create Course</a>
+<div class="container mt-4">
+    <h1 class="mb-4">All Courses</h1>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Course Name</th>
-            <th>Description</th>
-            <th>Course Rate</th>
-            <th>Image</th>
-            <th>Field of Study</th>
-            <th>Instructor Name</th>
-            <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var course in Model)
-        {
-            <tr>
-                <td>@course.Name</td>
-                <td>@course.Description</td>
-                <td>@course.CourseRate</td>
-                <td>
-                    <img src="/images/courses/@course.ImageUrl" alt="Course Image" style="width:100px; height: auto;"/>
-                </td>
-                <td>@course.FieldOfStudy</td>
-                <td>@course.InstructorName</td>
-                <td>@course.Price</td>
-                <td>
-                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
-                </td>
-                <td>
-                    <!-- Adding a SweetAlert for the delete confirmation -->
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete('@course.Id')">Remove</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="mb-4">
+        <a type="button" class="btn btn-primary btn-lg" asp-action="AddCourse" asp-controller="Course">
+            <i class="fa fa-plus-circle"></i> Create Course
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Course Rate</th>
+                    <th>Image</th>
+                    <th>Field of Study</th>
+                    <th>Instructor Name</th>
+                    <th>Price</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td>@course.Name</td>
+                        <td>@course.Description</td>
+                        <td>@course.CourseRate</td>
+                        <td>
+                            <img src="/images/courses/@course.ImageUrl" alt="Course Image" style="width:100px; height: auto; border-radius: 8px;" />
+                        </td>
+                        <td>@course.FieldOfStudy</td>
+                        <td>@course.InstructorName</td>
+                        <td>@course.Price.ToString("C2")</td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@course.Id">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                        </td>
+                        <td>
+                            <!-- Adding a SweetAlert for the delete confirmation -->
+                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('@course.Id')">
+                                <i class="fa fa-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <!-- SweetAlert script -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -57,7 +71,9 @@
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6'
         }).then((result) => {
             if (result.isConfirmed) {
                 // Redirect to the delete action in your controller
