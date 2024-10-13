@@ -1,0 +1,70 @@
+﻿@model List<Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>All Courses</h1>
+<a type="button" class="btn btn-primary" asp-action="AddCourse" asp-controller="Course">Create Course</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Course Rate</th>
+            <th>Image</th>
+            <th>Field of Study</th>
+            <th>Instructor Name</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+                <td>@course.CourseRate</td>
+                <td>
+                    <img src="/images/courses/@course.ImageUrl" alt="Course Image" style="width:100px; height: auto;"/>
+                </td>
+                <td>@course.FieldOfStudy</td>
+                <td>@course.InstructorName</td>
+                <td>@course.Price</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
+                </td>
+                <td>
+                    <!-- Adding a SweetAlert for the delete confirmation -->
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('@course.Id')">Remove</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- SweetAlert script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(courseId) {
+        Swal.fire({
+            title: 'Are you sure you want to delete this course?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to the delete action in your controller
+                window.location.href = '/Course/Delete/' + courseId;
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'The course was not deleted', 'info');
+            }
+        });
+    }
+</script>
