@@ -13,39 +13,65 @@
 </head>
 <body>
     <!-- Navigation-->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Start Bootstrap</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <img src="~/images/logo.png" alt="EduHorizon Logo" class="img-fluid" style="max-height: 40px;" />
+                <span class="ms-2">KSD Academy</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                        </ul>
+                   
+                </ul>
+                <ul class="navbar-nav ms-3">
+                    @await Component.InvokeAsync("CartSummary")
+                    <li class="nav-item">
+                        <partial name="_LoginPartial" />
                     </li>
                 </ul>
-                
-                @await Component.InvokeAsync("CartSummary")
-
-                <partial name="_LoginPartial"/>
             </div>
         </div>
     </nav>
-    
-    
-    @RenderBody()
-        
 
-    <footer class="py-5 bg-dark">
-        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; 2024</p></div>
+    <!-- Main Content Section -->
+    <div class="container mt-5 pt-5">
+        @RenderBody()
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>KSD Academy</h5>
+                    <p>Empowering learning, transforming lives. Learn at your own pace, anytime, anywhere.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white">Home</a></li>
+                        <li><a href="/home/about" class="text-white">About Us</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt"></i> 123 Edu Street, Knowledge City</li>
+                        <li><i class="bi bi-telephone"></i> +1 234 567 890</li>
+                        <li><i class="bi bi-envelope"></i> support@ksdacademy.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
