@@ -1,4 +1,5 @@
-﻿using E_learning_Platform.Models;
+﻿using E_learning_Platform.Data.Repository.Interfaces;
+using E_learning_Platform.Models;
 using E_learning_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ namespace E_learning_Platform.Controllers
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<IdentityRole<int>> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
+		private readonly IEnrollmentRepository _enrollmentRepository;
 
 		public AccountController(UserManager<ApplicationUser> userManager, 
 			RoleManager<IdentityRole<int>> roleManager, 
@@ -105,5 +107,35 @@ namespace E_learning_Platform.Controllers
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home");
 		}
-	}
+
+		public async Task<IActionResult> Profile(string username)
+		{
+			var user = await _userManager.FindByNameAsync(username);
+			return View(user);
+		}
+		[HttpPost]
+        public async Task<IActionResult> Profile(ApplicationUser userModel)
+        {
+			var user = await _userManager.FindByEmailAsync(userModel.Email);
+			user.FirstName = userModel.FirstName;
+			user.LastName = userModel.LastName;
+			user.PhoneNumber = userModel.PhoneNumber;
+			await _userManager.UpdateAsync(user);
+            return View(user);
+        }
+
+		public async Task<IActionResult> ListUserEnrolledCourses(string userId)
+		{
+            if (userId is null)
+                return View("MyCourses");
+
+            var id = int.Parse(userId);
+			if (id == 0)
+				return View("MyCourses");
+
+			var courses = await _enrollmentRepository.GetAllAsync(id);
+			return View("MyCourses", courses);
+		}
+		 
+    }
 }

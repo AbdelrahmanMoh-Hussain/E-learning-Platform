@@ -59,8 +59,8 @@ namespace E_learning_Platform.Controllers
             if (userCourses == null || userCourses.Count() == 0)
                 return Json(new { success = false });
 
-            var result = _enrollmentRepository.AddEnrollments(userId, userCourses);
-            if(result == null)
+            var resultSucceded = await _enrollmentRepository.AddEnrollmentsAsync(userId, userCourses);
+            if(resultSucceded == false)
                 return Json(new { success = false });
 
             return Json(new { success = true });

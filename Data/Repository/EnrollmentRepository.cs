@@ -1,5 +1,6 @@
 ﻿using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_learning_Platform.Data.Repository
 {
@@ -12,9 +13,8 @@ namespace E_learning_Platform.Data.Repository
             _context = context;
         }
 
-        public IEnumerable<Enrollement> AddEnrollments(int userId, IEnumerable<Course> courses)
+        public async Task<bool> AddEnrollmentsAsync(int userId, IEnumerable<Course> courses)
         {
-            List<Enrollement> enrollements = new List<Enrollement>();
             foreach (var course in courses)
             {
                 var enrollment = new Enrollement
@@ -24,16 +24,24 @@ namespace E_learning_Platform.Data.Repository
                     Progress = new Random().Next(0, 100)
 
                 };
-                _context.Enrollement.Add(enrollment);
+                await _context.Enrollement.AddAsync(enrollment);
                 _context.UserCoursesCart.Remove(new UserCoursesCart { CourseId = course.Id, UserId = userId });
-                var effectedRows = _context.SaveChanges();
+                var effectedRows = await _context.SaveChangesAsync();
                 if(effectedRows > 0)
                 {
-                    enrollements.Add(enrollment);
+                    return true;
                 }
             }
-            return enrollements;
+            return false;
 
+        }
+
+        public async Task<IEnumerable<Enrollement>> GetAllAsync(int userId)
+        {
+            return await _context.Enrollement
+                .Where(e => e.UserId == userId)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }
