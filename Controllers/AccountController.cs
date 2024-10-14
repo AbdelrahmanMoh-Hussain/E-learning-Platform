@@ -15,16 +15,18 @@ namespace E_learning_Platform.Controllers
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly IEnrollmentRepository _enrollmentRepository;
 
-		public AccountController(UserManager<ApplicationUser> userManager, 
-			RoleManager<IdentityRole<int>> roleManager, 
-			SignInManager<ApplicationUser> signInManager)
-		{
-			_userManager = userManager;
-			_roleManager = roleManager;
-			_signInManager = signInManager;
-		}
+        public AccountController(UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole<int>> roleManager,
+            SignInManager<ApplicationUser> signInManager,
+            IEnrollmentRepository enrollmentRepository)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _signInManager = signInManager;
+            _enrollmentRepository = enrollmentRepository;
+        }
 
-		public IActionResult Register(string? returnUrl)
+        public IActionResult Register(string? returnUrl)
 		{
             ViewBag.ReturnUrl = returnUrl ?? "/";
             UserRegisterViewModel userRegisterViewModel = new UserRegisterViewModel

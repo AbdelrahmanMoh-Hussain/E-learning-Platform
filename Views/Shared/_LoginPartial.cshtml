@@ -6,8 +6,17 @@
 <ul class="navbar-nav font-weight-bold">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a id="manage" class="nav-link font-weight-bold" asp-controller="Account" asp-action="Profile" asp-route-username="@UserManager.GetUserName(User)" title="Manage">Hello @((await UserManager.FindByNameAsync(UserManager.GetUserName(User))).FirstName)!</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hello @((await UserManager.FindByNameAsync(UserManager.GetUserName(User))).FirstName)!</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                    <a id="manage" class="nav-link font-weight-bold" asp-controller="Account" asp-action="Profile" asp-route-username="@UserManager.GetUserName(User)" title="Manage">My Profile</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <a class="nav-link font-weight-bold" id="login" asp-controller="Account" asp-action="logout">Logout</a>
+                </li>
+            </ul>
         </li>
     }
     else

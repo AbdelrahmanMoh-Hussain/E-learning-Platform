@@ -27,12 +27,13 @@ namespace E_learning_Platform.Data.Repository
                 await _context.Enrollement.AddAsync(enrollment);
                 _context.UserCoursesCart.Remove(new UserCoursesCart { CourseId = course.Id, UserId = userId });
                 var effectedRows = await _context.SaveChangesAsync();
-                if(effectedRows > 0)
+                if (effectedRows == 0)
                 {
-                    return true;
+                    return false;
                 }
+                
             }
-            return false;
+            return true;
 
         }
 
@@ -40,6 +41,7 @@ namespace E_learning_Platform.Data.Repository
         {
             return await _context.Enrollement
                 .Where(e => e.UserId == userId)
+                .Include(e => e.Course)
                 .AsNoTracking()
                 .ToListAsync();
         }
