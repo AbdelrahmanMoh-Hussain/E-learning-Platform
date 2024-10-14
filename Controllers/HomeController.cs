@@ -1,3 +1,5 @@
+using E_learning_Platform.Data;
+using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,22 +8,19 @@ namespace E_learning_Platform.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+		private readonly ICourseRepository _courseRepository;
 
-		public HomeController(ILogger<HomeController> logger)
+        public HomeController(ICourseRepository courseRepository)
+        {
+            _courseRepository = courseRepository;
+        }
+
+        public async Task<IActionResult> Index()
 		{
-			_logger = logger;
+			return View(await _courseRepository.GetAllAsync());
 		}
 
-		public IActionResult Index()
-		{
-			return View();
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
-		}
+		
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()

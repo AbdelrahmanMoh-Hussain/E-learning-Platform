@@ -9,7 +9,7 @@ namespace E_learning_Platform.Data
     {
         public DbSet<Course> Course { get; set; }
         public DbSet<Enrollement> Enrollement { get; set; }
-        public DbSet<StudentCourseCart> StudentCourseCart { get; set; }
+        public DbSet<UserCoursesCart> UserCoursesCart { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options) 
@@ -24,8 +24,8 @@ namespace E_learning_Platform.Data
             modelBuilder.Entity<Enrollement>()
                 .HasKey(e => new {e.CourseId, e.UserId});
 
-            modelBuilder.Entity<StudentCourseCart>()
-                .HasKey(e => new { e.UserId, e.CourseId });
+            modelBuilder.Entity<UserCoursesCart>()
+                .HasKey(e => new { e.CourseId, e.UserId });
 
             modelBuilder.Entity<Course>().HasMany(c => c.Users)
                 .WithMany(u => u.Courses)
@@ -33,7 +33,7 @@ namespace E_learning_Platform.Data
 
 			modelBuilder.Entity<Course>().HasMany(c => c.Users)
 				.WithMany(u => u.Courses)
-				.UsingEntity<StudentCourseCart>();
+				.UsingEntity<UserCoursesCart>();
 
             modelBuilder.Entity<IdentityRole<int>>()
                 .HasData(new[] 

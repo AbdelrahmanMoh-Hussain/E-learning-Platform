@@ -1,54 +1,129 @@
 ﻿@model IEnumerable<Course>
-<h2>Shopping Cart</h2>
-<p>2 Courses in the cart</p>
-<div class="container overflow-auto">
-    <div class="row mb-5 ">
-        <hr class="w-100 text-center"/>
-        <div class="col-10 d-flex flex-wrap">
-            <img src="" width="100" height="100" />
-            <div class="details ms-2">
-                <p class="mb-0 text-truncate">TITTLEasdadasdasdasasdasasdas</p>
-                <p class="mb-0">By Instructor</p>
-            </div>
-        </div>
-        <div class="col-2 text-center">
-            <p class="mb-2">20.00$</p>
-            <a class="text-decoration-underline remove-btn" onClick=Delete('/cart/removecourse/1')>Remove</a>
-        </div>
-    </div>
-    
-</div>
-<div class="d-flex justify-content-end align-items-center p-1">
-    <p class="m-0">Total Price: <span>100$</span></p>
-    <a class="btn btn-success ms-4" >Check Out</a>
-</div>
+<div class="container flex-grow-1">
+    <main role="main" class="pb-3">
+        <h2>Shopping Cart</h2>
+        <p><span id="cartCount">@Model.Count()</span> Courses in the cart</p>
+        <div class="container overflow-auto">
+            @foreach (var course in Model)
+            {
+                <div class="row mb-5 ">
+                    <hr class="w-100 text-center" />
+                    <div class="col-10 d-flex flex-wrap">
+                        <img src="/images/courses/@course.ImageUrl" width="100" height="100" />
+                        <div class="details ms-2">
+                            <p class="mb-0 text-truncate">@course.Name</p>
+                            <p class="mb-0">By @course.InstructorName</p>
+                        </div>
+                    </div>
+                    <div class="col-2 text-center">
+                        <p class="mb-2">@course.Price.ToString("C2")</p>
+                        <a class="text-decoration-underline remove-btn" data-courseid="@course.Id" data-price="@course.Price">Remove</a>
+                    </div>
+                </div>
+            }
 
+        </div>
+        <div class="d-flex justify-content-end align-items-center p-1">
+            <p class="m-0">Total Price: <span id="totalprice">@Model.Sum(c => c.Price).ToString("C2")</span></p>
+            <a class="btn btn-success ms-4" id="checkout-btn">Check Out</a>
+        </div>
+    </main>
+</div>
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        
-        const removeBtn = document.querySelector('.remove-btn')
-        function Delete(url) {
+
+        function removeCourse(courseId, coursePrice, courseElement) {
+            console.log(courseId)
+            console.log(courseElement)
             Swal.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "Do you want to remove this course from your cart?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Yes, remove it!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Make AJAX call to remove the course
                     $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        success: function (data) {
-                            removeBtn.parentElement.parentElement.remove();
+                        url: '@Url.Action("RemoveCourse", "Cart")', // Adjust your controller name
+                        type: 'POST',
+                        data: { courseId: courseId },
+                        success: function (response) {
+                            if (response.success) {
+                                // Remove the course element from the DOM
+                                $(courseElement).closest('.row').remove();
+
+                                // Optionally update the total price or cart count
+                                var totalPriceElement = $('#totalprice'); // Assuming you have an element with id="totalPrice"
+                                var currentTotal = parseFloat(totalPriceElement.text().replace('$', ''));
+                                var newTotal = currentTotal - coursePrice;
+                                totalPriceElement.text('$' + newTotal.toFixed(2));
+
+                                var cartCountElement = $('#cartCount'); // Assuming you have an element with id="cartCount"
+                                var currentCount = parseInt(cartCountElement.text());
+                                cartCountElement.text(currentCount - 1);
+
+                                var cartCountElement = $('#cartSummaryCount'); // Assuming you have an element with id="cartCount"
+                                var currentCount = parseInt(cartCountElement.text());
+                                cartCountElement.text(currentCount - 1);
+
+                                Swal.fire(
+                                    'Removed!',
+                                    'The course has been removed from your cart.',
+                                    'success'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Something went wrong, please try again.',
+                                    'error'
+                                );
+                            }
                         }
-                    })
+                    });
                 }
-            })
+            });
         }
+
+        // Attach the click event to your "Remove" links
+        $(document).ready(function () {
+            $('.remove-btn').on('click', function () {
+                var courseId = $(this).data('courseid');  // Get course ID
+                var coursePrice = parseFloat($(this).data('price'));  // Get course price
+                var courseElement = this;
+                removeCourse(courseId, coursePrice, courseElement);
+            });
+        });
+
+        document.querySelector('#checkout-btn').addEventListener('click', () => {
+            $.ajax({
+                url: '@Url.Action("Enroll", "Cart")', // Adjust your controller name
+                type: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Enrolled!',
+                            text: 'You have been enrolled to these courses',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '@Url.Action("Index", "Home")';
+                            }
+                        });
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong, please try again.',
+                            'error'
+                        );
+                    }
+                }
+            });
+        });
         
     </script>
 

@@ -1,6 +1,7 @@
 ﻿using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
 
+
 namespace E_learning_Platform.Data.Repository
 {
     public class CourseRepository : ICourseRepository
@@ -41,6 +42,7 @@ namespace E_learning_Platform.Data.Repository
         public void Update(Course course)
         {
             _context.Update(course);  
+
         }
     }
 }

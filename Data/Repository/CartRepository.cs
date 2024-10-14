@@ -1,5 +1,6 @@
 ﻿using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_learning_Platform.Data.Repository
 {
@@ -12,9 +13,11 @@ namespace E_learning_Platform.Data.Repository
             _context = context;
         }
 
+        
+
         public IEnumerable<Course?> GetUserCartCourses(int userId)
         {
-            var coursesId = _context.StudentCourseCart.Where(c => c.UserId == userId)
+            var coursesId = _context.UserCoursesCart.Where(c => c.UserId == userId)
                                 .Select(c => c.CourseId)
                                 .ToList();
 
@@ -29,17 +32,23 @@ namespace E_learning_Platform.Data.Repository
             return courses;
         }
 
-        public void RemoveCourseFromUserCart(int courseId, int userId)
+        public async Task<bool> RemoveCourseFromUserCartAsync(int courseId, int userId)
         {
-            var cartItemToRemove = _context.StudentCourseCart
-                .FirstOrDefault(c => c.UserId == userId && c.CourseId == courseId);
-            if (cartItemToRemove == null)
-                return;
-
-            _context.StudentCourseCart.Remove(cartItemToRemove);
-            _context.SaveChanges();
+            _context.UserCoursesCart.Remove(new UserCoursesCart { CourseId = courseId, UserId = userId });
+            var effectedRows = await _context.SaveChangesAsync();
+            return effectedRows > 0;
+        }
+        public async Task<bool> AddToCartAsync(int courseId, int userId)
+        {
+            var cart = new UserCoursesCart{ CourseId = courseId, UserId = userId };
+            if (_context.UserCoursesCart.Contains(cart))
+            {
+                return false;
+            }
+            await _context.UserCoursesCart.AddAsync(new UserCoursesCart { CourseId = courseId, UserId = userId });
+            var effectedRows = await _context.SaveChangesAsync();
+            return effectedRows > 0;
         }
 
-        
     }
 }

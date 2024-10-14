@@ -12,7 +12,7 @@ namespace E_learning_Platform.Data.Repository
             _context = context;
         }
 
-        public IEnumerable<Enrollement> AddEnrollments(int userId, List<Course> courses)
+        public IEnumerable<Enrollement> AddEnrollments(int userId, IEnumerable<Course> courses)
         {
             List<Enrollement> enrollements = new List<Enrollement>();
             foreach (var course in courses)
@@ -20,9 +20,12 @@ namespace E_learning_Platform.Data.Repository
                 var enrollment = new Enrollement
                 {
                     UserId = userId,
-                    CourseId = course.Id
+                    CourseId = course.Id,
+                    Progress = new Random().Next(0, 100)
+
                 };
                 _context.Enrollement.Add(enrollment);
+                _context.UserCoursesCart.Remove(new UserCoursesCart { CourseId = course.Id, UserId = userId });
                 var effectedRows = _context.SaveChanges();
                 if(effectedRows > 0)
                 {
