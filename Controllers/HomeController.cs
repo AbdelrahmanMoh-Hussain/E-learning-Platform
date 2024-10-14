@@ -15,9 +15,9 @@ namespace E_learning_Platform.Controllers
             _courseRepository = courseRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
 		{
-			return View(await _courseRepository.GetAllAsync());
+			return View( _courseRepository.GetAll());
 		}
 
 		

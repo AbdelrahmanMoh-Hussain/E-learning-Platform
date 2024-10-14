@@ -65,12 +65,16 @@
                 success: function (response) {
                     if (response.success) {
                         Swal.fire({
-                            position: "top-start",
+                            position: "center",
                             icon: "success",
                             title: "Course Added to Cart",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
                         });
+                        var cartCountElement = $('#cartSummaryCount'); 
+                        var currentCount = parseInt(cartCountElement.text());
+                        cartCountElement.text(currentCount + 1);
+
                     } else {
                         Swal.fire(
                             'Error!',

@@ -18,6 +18,9 @@ namespace E_learning_Platform.ViewComponents
         {
             
             var username = HttpContext.User.Identity.Name;
+            if(username is null)
+                return View(0);
+
             var user = _userManager.FindByNameAsync(username).Result;
             var cartCount = _cartRepository.GetUserCartCourses(user.Id).Count(); // Adjust based on your method
             return View(cartCount);
