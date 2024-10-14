@@ -1,6 +1,6 @@
 ﻿using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace E_learning_Platform.Data.Repository
 {
@@ -12,40 +12,37 @@ namespace E_learning_Platform.Data.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<Course>> GetAllAsync()
+        public void Create(Course course)
         {
-            return await _context.Course.AsNoTracking().ToListAsync();
+            _context.Course.Add(course);
         }
 
-        public async Task<Course?> GetByIdAsync(int id)
+        public void DeleteByID(int id)
         {
-            return await _context.Course.FindAsync(id);
+            Course course=GetById(id);
+            _context.Remove(course);
         }
 
-        public async Task AddCourseAsync(Course course)
+        public List<Course> GetAll()
         {
-            await _context.Course.AddAsync(course);
-            await _context.SaveChangesAsync();
+            return _context.Course.ToList();
         }
 
-        public async Task<Course?> UpdateCourseAsync(int courseId, Course course)
+        public Course GetById(int id)
         {
-            var courseToUpdate = await GetByIdAsync(courseId);
-            if (courseToUpdate == null)
-                return null;
-            _context.Course.Entry(courseToUpdate).CurrentValues.SetValues(course);
-            await _context.SaveChangesAsync();
-
-            return courseToUpdate;
+            Course course=_context.Course.FirstOrDefault(c => c.Id == id);
+            return course;
         }
-        public async Task DeleteCourseAsync(int courseId)
+
+        public void saveChanges()
         {
-            var courseToDelete = await GetByIdAsync(courseId);
-            if (courseToDelete == null)
-                return;
-            
-            _context.Course.Remove(courseToDelete);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
+        }
+
+        public void Update(Course course)
+        {
+            _context.Update(course);  
+
         }
     }
 }

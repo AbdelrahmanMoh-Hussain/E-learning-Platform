@@ -1,0 +1,71 @@
+﻿@model Course
+
+@{
+    Layout = "/Views/Shared/adminLayout.cshtml";
+    ViewData["Title"] = "Add Course";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Add Course</h1>
+
+    <form method="post" asp-action="SaveCourse" class="needs-validation" novalidate>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="Name" class="form-label fw-bold">Course Name</label>
+                <input asp-for="Name" type="text" class="form-control" placeholder="Enter course name" required>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="InstructorName" class="form-label fw-bold">Instructor Name</label>
+                <input asp-for="InstructorName" type="text" class="form-control" placeholder="Enter instructor's name" required>
+                <span asp-validation-for="InstructorName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label asp-for="Description" class="form-label fw-bold">Course Description</label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter course description" required></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="CourseRate" class="form-label fw-bold">Course Rate</label>
+                <input asp-for="CourseRate" type="number" class="form-control" placeholder="Rate (0-5)" required>
+                <span asp-validation-for="CourseRate" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Price" class="form-label fw-bold">Price</label>
+                <input asp-for="Price" type="number" class="form-control" placeholder="Enter price" required>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="FieldOfStudy" class="form-label fw-bold">Field of Study</label>
+                <input asp-for="FieldOfStudy" type="text" class="form-control" placeholder="Enter field of study" required>
+                <span asp-validation-for="FieldOfStudy" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="ImageUrl" class="form-label fw-bold">Image URL</label>
+                <input asp-for="ImageUrl" type="text" class="form-control" placeholder="Enter image URL" required>
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5">Save Course</button>
+        </div>
+    </form>
+</div>
+
+<!-- External Validation Scripts -->
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
