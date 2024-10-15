@@ -13,6 +13,21 @@ namespace E_learning_Platform.Data.Repository
             _context = context;
         }
 
+        public async Task<bool> AddCourseUserRateAsync(int userId, int courseId, int rate)
+        {
+            var enrollment = await _context.Enrollement.FirstOrDefaultAsync(e => e.UserId == userId && e.CourseId == courseId);
+            if (enrollment == null)
+                return false;
+
+            enrollment.CourseRate = rate;
+
+            var effactedRows = await _context.SaveChangesAsync();
+            if(effactedRows == 0)
+                return false;
+
+            return true;
+        }
+
         public async Task<bool> AddEnrollmentsAsync(int userId, IEnumerable<Course> courses)
         {
             foreach (var course in courses)
@@ -35,6 +50,21 @@ namespace E_learning_Platform.Data.Repository
             }
             return true;
 
+        }
+
+        public async Task<bool> CompletePrograssAsync(int userId, int courseId)
+        {
+            var enrollment = await _context.Enrollement.FirstOrDefaultAsync(e => e.CourseId == courseId && e.UserId == userId);
+            if (enrollment == null) 
+                return false;
+
+            enrollment.Progress = 100;
+
+            var effactedRows = await _context.SaveChangesAsync();
+            if (effactedRows == 0)
+                return false;
+
+            return true;
         }
 
         public async Task<IEnumerable<Enrollement>> GetAllAsync(int userId)

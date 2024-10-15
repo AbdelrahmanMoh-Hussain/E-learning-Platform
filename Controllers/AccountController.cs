@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace E_learning_Platform.Controllers
 {
@@ -13,17 +14,14 @@ namespace E_learning_Platform.Controllers
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<IdentityRole<int>> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
-		private readonly IEnrollmentRepository _enrollmentRepository;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole<int>> roleManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEnrollmentRepository enrollmentRepository)
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _enrollmentRepository = enrollmentRepository;
         }
 
         public IActionResult Register(string? returnUrl)
@@ -110,12 +108,16 @@ namespace E_learning_Platform.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
+		[Authorize]
 		public async Task<IActionResult> Profile(string username)
 		{
 			var user = await _userManager.FindByNameAsync(username);
 			return View(user);
 		}
+
 		[HttpPost]
+        [Authorize]
+
         public async Task<IActionResult> Profile(ApplicationUser userModel)
         {
 			var user = await _userManager.FindByEmailAsync(userModel.Email);
@@ -126,18 +128,7 @@ namespace E_learning_Platform.Controllers
             return View(user);
         }
 
-		public async Task<IActionResult> ListUserEnrolledCourses(string userId)
-		{
-            if (userId is null)
-                return View("MyCourses");
+		
 
-            var id = int.Parse(userId);
-			if (id == 0)
-				return View("MyCourses");
-
-			var courses = await _enrollmentRepository.GetAllAsync(id);
-			return View("MyCourses", courses);
-		}
-		 
     }
 }
