@@ -1,0 +1,75 @@
+﻿
+@model CourseAndRelatedCoursesViewModel
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<!-- Header -->
+<header class="bg-primary py-5 text-white text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Course Details</h1>
+        <p class="lead">Discover the details and take the next step in your learning journey.</p>
+    </div>
+</header>
+
+<body>
+    <!-- Product section -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <img class="card-img-top" src="/images/courses/@Model.Course.ImageUrl" alt="@Model.Course.Name" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder">@Model.Course.Name</h1>
+                    <h6 class="text-muted mb-3">Instructor: @Model.Course.InstructorName</h6>
+                    <div class="fs-5 mb-4">
+                        <span class="text-decoration-line-through">$(@(Model.Course.Price + 100))</span>
+                        <span class="text-primary">$@Model.Course.Price</span>
+                    </div>
+                    <p class="lead">@Model.Course.Description</p>
+                    <div class="d-flex">
+                        <!-- ADD TO CART section -->
+                        <a href="#" class="btn btn-outline-primary flex-shrink-0" onclick="AddToCart('/cart/addtocart?courseId=@Model.Course.Id')">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Courses section -->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">Related Courses</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                @foreach (var relatedCourse in Model.RelatedCourses)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <a href="@Url.Action("GetItem", "Course", new { id = relatedCourse.Id })" class="text-decoration-none text-dark">
+                                <img class="card-img-top" src="/images/courses/@relatedCourse.ImageUrl" alt="@relatedCourse.Name" />
+                                <div class="card-body text-center">
+                                    <h5 class="fw-bold">@relatedCourse.Name</h5>
+                                    <p class="fw-bold text-primary">@relatedCourse.Price.ToString("C2")</p>
+                                </div>
+                            </a>
+                            <div class="card-footer bg-transparent text-center">
+                                <a class="btn btn-outline-primary w-100" onclick="AddToCart('/cart/addtocart?courseId=@relatedCourse.Id')">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts for Bootstrap & Core functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>

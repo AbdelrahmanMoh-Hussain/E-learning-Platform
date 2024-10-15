@@ -1,5 +1,6 @@
-﻿using E_learning_Platform.Data.Repository.Interfaces;
+using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
+using E_learning_Platform.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,6 +72,16 @@ namespace E_learning_Platform.Controllers
             return View("Edit", courseFromReq);
 
             
+        }
+
+        public IActionResult GetItem(int id) { 
+            CourseAndRelatedCoursesViewModel courseAndRelatedCourses=new CourseAndRelatedCoursesViewModel();
+
+            courseAndRelatedCourses.Course=courseRepository.GetById(id);
+
+            courseAndRelatedCourses.RelatedCourses= courseRepository.GetAll().Where(c=>c.FieldOfStudy== courseAndRelatedCourses.Course.FieldOfStudy &&c.Id!= courseAndRelatedCourses.Course.Id).ToList();
+
+            return View("GetItem", courseAndRelatedCourses);
         }
     }
 }
