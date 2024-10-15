@@ -49,7 +49,7 @@ namespace E_learning_Platform.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Enroll(int courseId)
+        public async Task<IActionResult> Enroll()
         {
             var userId = await GetSignedInUserIdAsync();
             if(userId == 0)
