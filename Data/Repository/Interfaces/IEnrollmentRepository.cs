@@ -8,5 +8,7 @@ namespace E_learning_Platform.Data.Repository.Interfaces
         public Task<IEnumerable<Enrollement>> GetAllAsync(int userId);
         public Task<bool> AddCourseUserRateAsync(int userId, int courseId, int rate);
         public Task<bool> CompletePrograssAsync(int userId, int courseId);
+        public Task<bool> Contains(int userId, int courseId);
+
     }
 }
