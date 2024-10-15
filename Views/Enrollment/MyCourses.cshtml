@@ -1,0 +1,134 @@
+﻿@inject UserManager<ApplicationUser> UserManager
+
+@model IEnumerable<Enrollement>
+
+<div class="">
+    
+    <div class="container  p-5 my-3 parent-class">
+        <a asp-controller="Account" asp-action="Profile" asp-route-username="@UserManager.GetUserName(User)" class="btn btn-outline-primary mb-2">Back to profile</a>
+        <h2 class="mb-2 mx-auto">Your enrolled courses</h2>
+        @foreach(var enrollment in Model)
+        {
+            <div class="row mt-1 p-4 border border-secondary rounded-1">
+                <div class="col-lg-7 d-flex flex-wrap">
+                    <img class="rounded-1" src="/images/courses/@enrollment.Course.ImageUrl" width="100" height="100" />
+                    <div class="details ms-2 w-50">
+                        <p class="mb-0 text-truncate">@enrollment.Course.Name</p>
+                        <p class="mb-0">By @enrollment.Course.InstructorName</p>
+                        <div class="progress mt-1">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @(enrollment.Progress)%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-5 mt-2 d-flex justify-content-between align-items-center gap-1 p-0">
+                    <select  class="form-select w-50"  data-userid="@enrollment.UserId" data-courseid="@enrollment.CourseId">
+                        @if(enrollment.CourseRate == 0)
+                        {
+                            <option selected disabled>Rate</option>
+                            <option value="1" label="⭐"></option>
+                            <option value="2" label="⭐⭐"></option>
+                            <option value="3" label="⭐⭐⭐"></option>
+                            <option value="4" label="⭐⭐⭐⭐"></option>
+                            <option value="5" label="⭐⭐⭐⭐⭐"></option>
+                        }
+                        else if (enrollment.CourseRate == 1)
+                        {
+                            <option selected value="1" label="⭐"></option>
+                            <option value="2" label="⭐⭐"></option>
+                            <option value="3" label="⭐⭐⭐"></option>
+                            <option value="4" label="⭐⭐⭐⭐"></option>
+                            <option value="5" label="⭐⭐⭐⭐⭐"></option>
+                        }
+                        else if (enrollment.CourseRate == 2)
+                        {
+                            <option value="1" label="⭐"></option>
+                            <option selected value="2" label="⭐⭐"></option>
+                            <option value="3" label="⭐⭐⭐"></option>
+                            <option value="4" label="⭐⭐⭐⭐"></option>
+                            <option value="5" label="⭐⭐⭐⭐⭐"></option>
+                        }
+                        else if (enrollment.CourseRate == 3)
+                        {
+                            <option value="1" label="⭐"></option>
+                            <option value="2" label="⭐⭐"></option>
+                            <option selected value="3" label="⭐⭐⭐"></option>
+                            <option value="4" label="⭐⭐⭐⭐"></option>
+                            <option value="5" label="⭐⭐⭐⭐⭐"></option>
+                        }
+                        else if (enrollment.CourseRate == 4)
+                        {
+                            <option value="1" label="⭐"></option>
+                            <option value="2" label="⭐⭐"></option>
+                            <option value="3" label="⭐⭐⭐"></option>
+                            <option selected value="4" label="⭐⭐⭐⭐"></option>
+                            <option value="5" label="⭐⭐⭐⭐⭐"></option>
+                        }
+                        else if (enrollment.CourseRate == 5)
+                        {
+                            <option value="1" label="⭐"></option>
+                            <option value="2" label="⭐⭐"></option>
+                            <option value="3" label="⭐⭐⭐"></option>
+                            <option value="4" label="⭐⭐⭐⭐"></option>
+                            <option selected value="5" label="⭐⭐⭐⭐⭐"></option>
+                        }
+
+                    </select>
+                    <a class="btn btn-success ">Continue <i class="bi bi-caret-right-fill"></i></a>
+                    <a asp-action="CompletePrograss" asp-route-userId="@enrollment.UserId" asp-route-courseId="@enrollment.CourseId" class="border border-success rounded-2 p-1 text-center complete-btn"><i class="bi bi-check-lg text-success"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        
+        function AddRate(userId, courseId, rate) {
+            console.log(rate);
+            console.log(userId);
+            console.log(courseId);
+            $.ajax({
+                url: `AddCourseUserRate?userId=${userId}&courseId=${courseId}&rate=${rate}`,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Review saved!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        Swal.fire('Error!', 'This course is already in your cart!', 'error');
+                    }
+                }
+            })
+        }
+        document.querySelector('.parent-class').addEventListener('change', (event) => {
+            const target = event.target;
+            console.log(target)
+            if (target.nodeName === 'SELECT') {
+                var userId = $(target).data('userid');  // Get course ID
+                var courseId = $(target).data('courseid');  // Get course ID
+                const rate = Number(target.options[target.selectedIndex].value);
+                console.log(rate);
+                console.log(userId);
+                console.log(courseId);
+                AddRate(userId, courseId, rate)
+            }
+        });
+        document.querySelector('.parent-class').addEventListener('click', (event) => {
+            const target = event.target;
+            console.log(target)
+            if (target.nodeName === 'A' && target.classList.Contains('complete-btn')) {
+                target.classList.add('bg-success');
+                target.classList.add('text-light');
+                target.closest(".progress-bar").wight = 100;
+            }
+        });
+        
+    </script>
+}

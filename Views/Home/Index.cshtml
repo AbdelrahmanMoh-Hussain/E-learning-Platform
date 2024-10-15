@@ -11,6 +11,7 @@
     </div>
 </header>
 
+
 <!-- Search Section -->
 <div class="container mt-5">
     <form asp-action="Index" method="get" class="d-flex justify-content-center">
@@ -79,14 +80,27 @@
                             icon: "success",
                             title: "Course Added to Cart",
                             showConfirmButton: false,
-                            timer: 1000
+                            timer: 1500
                         });
                         var cartCountElement = $('#cartSummaryCount');
                         var currentCount = parseInt(cartCountElement.text());
                         cartCountElement.text(currentCount + 1);
                     } else {
-                        Swal.fire('Error!', 'This course is already in your cart!', 'error');
+                        Swal.fire('Error!', 'This course is already in your cart or you already enrolled on it', 'error');
                     }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error occurred:", xhr.responseText);  // Debug log
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'You have to log in to add to cart!',
+                        icon: 'error',
+                        confirmButtonText: 'Login'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '@Url.Action("Login", "Account")';
+                        }
+                    });
                 }
             });
         }

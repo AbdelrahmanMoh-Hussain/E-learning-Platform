@@ -14,5 +14,6 @@ namespace E_learning_Platform.Data.Repository.Interfaces
         public void Update(Course course);
         public void DeleteByID(int id);
         public void saveChanges();
+        
     }
 }

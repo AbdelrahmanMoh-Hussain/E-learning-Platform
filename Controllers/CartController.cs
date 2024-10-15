@@ -49,7 +49,7 @@ namespace E_learning_Platform.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Enroll(int courseId)
+        public async Task<IActionResult> Enroll()
         {
             var userId = await GetSignedInUserIdAsync();
             if(userId == 0)
@@ -72,6 +72,10 @@ namespace E_learning_Platform.Controllers
             var user = await _userManager.FindByNameAsync(_userManager.GetUserName(User));
             if (user == null) 
                 return Json(new { success = false });
+
+            if(await _enrollmentRepository.Contains(user.Id, courseId))
+                return Json(new { success = false });
+
             var result = await _cartRepository.AddToCartAsync(courseId, user.Id);
             return Json(new { success = result });
         }
