@@ -67,6 +67,12 @@ namespace E_learning_Platform.Data.Repository
             return true;
         }
 
+        public async Task<bool> Contains(int userId, int courseId)
+        {
+            return await _context.Enrollement
+                    .ContainsAsync(new Enrollement { CourseId=courseId, UserId = userId });
+        }
+
         public async Task<IEnumerable<Enrollement>> GetAllAsync(int userId)
         {
             return await _context.Enrollement
