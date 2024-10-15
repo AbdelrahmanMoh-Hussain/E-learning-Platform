@@ -9,14 +9,14 @@
                 <div class="row mb-5 ">
                     <hr class="w-100 text-center" />
                     <div class="col-10 d-flex flex-wrap">
-                        <img src="/images/courses/@course.ImageUrl" width="100" height="100" />
+                        <img class="rounded-1" src="/images/courses/@course.ImageUrl" width="100" height="100" />
                         <div class="details ms-2">
                             <p class="mb-0 text-truncate">@course.Name</p>
                             <p class="mb-0">By @course.InstructorName</p>
                         </div>
                     </div>
                     <div class="col-2 text-center">
-                        <p class="mb-2">@course.Price.ToString("C2")</p>
+                        <p class="mb-2">Expected Price: <span class="text-success">@course.Price.ToString("C2")</span></p>
                         <a class="text-decoration-underline remove-btn" data-courseid="@course.Id" data-price="@course.Price">Remove</a>
                     </div>
                 </div>
@@ -24,8 +24,8 @@
 
         </div>
         <div class="d-flex justify-content-end align-items-center p-1">
-            <p class="m-0">Total Price: <span id="totalprice">@Model.Sum(c => c.Price).ToString("C2")</span></p>
-            <a class="btn btn-success ms-4" id="checkout-btn">Check Out</a>
+            <p class="m-0">You saved: <span id="totalprice">@Model.Sum(c => c.Price).ToString("C2")</span></p>
+            <a class="btn btn-success ms-4 px-5 py-2" id="checkout-btn">Enroll</a>
         </div>
     </main>
 </div>
