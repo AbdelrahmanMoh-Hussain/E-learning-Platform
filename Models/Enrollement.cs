@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_learning_Platform.Models
@@ -12,6 +13,9 @@ namespace E_learning_Platform.Models
         [Range(0,100)]
         public int Progress {  get; set; }
 
+        [Range(0, 5, ErrorMessage = "Course rate must be between 0 and 5")]
+        [DisplayName("Course rate")]
+        public decimal CourseRate { get; set; }
         public Course Course { get; set; }
         public ApplicationUser User { get; set; }
     }

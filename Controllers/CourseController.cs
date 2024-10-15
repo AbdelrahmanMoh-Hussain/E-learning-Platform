@@ -1,9 +1,12 @@
 ﻿using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_learning_Platform.Controllers
 {
+    [Authorize(Roles = "admin")]
+
     public class CourseController : Controller
     {
         private readonly ICourseRepository courseRepository;
