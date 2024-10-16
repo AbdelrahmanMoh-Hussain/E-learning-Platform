@@ -1,7 +1,7 @@
 # E-learning Platform
 
 ## Database Schema
-![image](https://github.com/user-attachments/assets/ba051a1c-b052-41e7-9b7e-6815989e6b24)
+![image](https://github.com/user-attachments/assets/0e750732-cfb6-443e-9fa2-807d5ab9cd37)
 
 ## Pages Design
 ### Sign Up
