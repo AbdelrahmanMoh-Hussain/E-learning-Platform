@@ -79,4 +79,3 @@ Users can track their learning journey through real-time progress updates. The p
 ![Course Progress](https://github.com/user-attachments/assets/72815bfe-3d8f-4192-b281-7d99fd836104)
 
 ---
-
