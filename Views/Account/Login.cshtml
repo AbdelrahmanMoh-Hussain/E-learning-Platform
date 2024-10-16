@@ -14,7 +14,9 @@
 </head>
 <body>
     <div class="container">
-        <img class="logo" src="~/images/Logo.png" />
+        <a asp-action="Index" asp-controller="Home">
+            <img class="logo" src="~/images/Logo.png" />
+        </a>
         <form asp-action="Login" method="post">
             <div class="text-danger" asp-validation-summary="All"></div>
             <input name="returnUrl" type="hidden" value="@ViewBag.ReturnUrl" />

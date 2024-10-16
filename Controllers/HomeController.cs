@@ -1,6 +1,9 @@
 using E_learning_Platform.Data;
+using E_learning_Platform.Data.Repository;
 using E_learning_Platform.Data.Repository.Interfaces;
 using E_learning_Platform.Models;
+using E_learning_Platform.Models.ViewModels;
+using E_learning_Platform.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -30,6 +33,16 @@ namespace E_learning_Platform.Controllers
 
             return View(courses);
         }
+        public IActionResult Details(int courseId) 
+        {
+            CourseAndRelatedCoursesViewModel courseAndRelatedCourses = new CourseAndRelatedCoursesViewModel();
+            courseAndRelatedCourses.Course = _courseRepository.GetById(courseId);
+
+            courseAndRelatedCourses.RelatedCourses = _courseRepository.GetAll().Where(c => c.FieldOfStudy == courseAndRelatedCourses.Course.FieldOfStudy && c.Id != courseAndRelatedCourses.Course.Id).ToList();
+
+            return View(courseAndRelatedCourses);
+        }
+
         public IActionResult About()
         {
             return View();

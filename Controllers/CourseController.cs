@@ -73,15 +73,5 @@ namespace E_learning_Platform.Controllers
 
             
         }
-
-        public IActionResult GetItem(int id) { 
-            CourseAndRelatedCoursesViewModel courseAndRelatedCourses=new CourseAndRelatedCoursesViewModel();
-
-            courseAndRelatedCourses.Course=courseRepository.GetById(id);
-
-            courseAndRelatedCourses.RelatedCourses= courseRepository.GetAll().Where(c=>c.FieldOfStudy== courseAndRelatedCourses.Course.FieldOfStudy &&c.Id!= courseAndRelatedCourses.Course.Id).ToList();
-
-            return View("GetItem", courseAndRelatedCourses);
-        }
     }
 }

@@ -29,6 +29,11 @@ namespace E_learning_Platform.Models
         [DisplayName("Course image")]
         public string ImageUrl {  get; set; }
 
+        [Required(ErrorMessage = "Video URL is required")]
+        //[Url(ErrorMessage ="Invalid URL format")]
+        [DisplayName("Course Video")]
+        public string VideoUrl { get; set; }
+
         [Required(ErrorMessage = "Field of study is required")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Field of study must be between 3 and 50 characters")]
         [DisplayName("Field of study")]

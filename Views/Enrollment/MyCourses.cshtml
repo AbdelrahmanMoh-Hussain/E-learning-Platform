@@ -1,4 +1,6 @@
-﻿@inject UserManager<ApplicationUser> UserManager
+﻿@using E_learning_Platform.Services.Interfaces
+@inject UserManager<ApplicationUser> UserManager
+@inject IYouTubeVideoDurationService YoutubeService;
 
 @model IEnumerable<Enrollement>
 
@@ -74,7 +76,7 @@
                         }
 
                     </select>
-                    <a class="btn btn-success ">Continue <i class="bi bi-caret-right-fill"></i></a>
+                    <a href="@(await YoutubeService.GetYouTubeVideoWithPrograss(enrollment.Course.VideoUrl, enrollment.Progress))" class="btn btn-success ">Continue <i class="bi bi-caret-right-fill"></i></a>
                     <a asp-action="CompletePrograss" asp-route-userId="@enrollment.UserId" asp-route-courseId="@enrollment.CourseId" class="border border-success rounded-2 p-1 text-center complete-btn"><i class="bi bi-check-lg text-success"></i></a>
                 </div>
             </div>

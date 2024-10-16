@@ -11,9 +11,21 @@
                 Hello @((await UserManager.FindByNameAsync(UserManager.GetUserName(User))).FirstName)!
             </a>
             <ul class="dropdown-menu ms-1" aria-labelledby="navbarDropdown">
-                <li>
+                @if (await UserManager.IsInRoleAsync((await UserManager.FindByNameAsync(UserManager.GetUserName(User))), "admin")){
+                    <li>
+                        <a id="manage" class="nav-link font-weight-bold dropdown-item" asp-controller="Admin" asp-action="Index" title="Manage">Admin Dashbored</a>
+                    </li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                        <a id="manage" class="nav-link font-weight-bold dropdown-item" asp-controller="Account" asp-action="Profile" asp-route-username="@UserManager.GetUserName(User)" title="Manage">My Profile</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
                     <a id="manage" class="nav-link font-weight-bold dropdown-item" asp-controller="Account" asp-action="Profile" asp-route-username="@UserManager.GetUserName(User)" title="Manage">My Profile</a>
-                </li>
+                    </li>
+                }
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                     <a class="nav-link font-weight-bold dropdown-item"  asp-controller="Account" asp-action="logout">Logout</a>

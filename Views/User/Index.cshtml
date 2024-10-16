@@ -1,0 +1,105 @@
+﻿@* @using E_learning_Platform.Data.Repository
+@using E_learning_Platform.Data.Repository.Interfaces
+@inject IEnrollmentRepository EnrollmentRepo *@
+
+@model IEnumerable<UserRoleWithEnrolledCoursesViewModel>
+
+@{
+    Layout = "/Views/Shared/adminLayout.cshtml";
+    ViewData["Title"] = "Users";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">All Users</h1>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Phone Number</th>
+                    <th># Enrolled Courses</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var userViewModel in Model)
+                {
+                    <tr class="text-center">
+                        <td>@($"{userViewModel.User.FirstName} {userViewModel.User.LastName}")</td>
+                        <td>@userViewModel.User.UserName</td>
+                        <td>@userViewModel.User.Email</td>
+                        <td>@userViewModel.Role</td>
+                        <td>@(userViewModel.User.PhoneNumber ?? "0000")</td>
+                        <td>@userViewModel.EnrolledCoursesCount</td>
+                        <td>
+                            <!-- Adding a SweetAlert for the delete confirmation -->
+                            <button type="button" class="btn btn-danger btn-sm remove-btn" data-userid="@userViewModel.User.Id">
+                                <i class="fa fa-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function confirmDelete(userId, userElement) {
+            console.log(userId);
+            console.log(userElement);
+            Swal.fire({
+                title: 'Are you sure you want to delete this course?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6'
+            }).then((result) => {
+                if (result.isConfirmed) { 
+                    // Redirect to the delete action in your controller
+                    $.ajax({
+                        url: `/user/delete?userId=${userId}`,
+                        success: function (response) {
+                            if (response.success) {
+                                userElement.closest('tr').remove();
+
+                                Swal.fire(
+                                    'Removed!',
+                                    'The course has been removed from your cart.',
+                                    'success'
+                                );
+                            } 
+                            else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Something went wrong, please try again.',
+                                    'error'
+                                );
+                            }
+                        }
+                     });
+                } 
+                else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire('Cancelled', 'The course was not deleted', 'info');
+                }
+            });
+        }
+        $(document).ready(function () {
+            $('.remove-btn').on('click', function () {
+                var userId = $(this).data('userid');  // Get course ID
+                var userElement = this;
+                confirmDelete(userId, userElement);
+            });
+        });
+    </script>
+}
+

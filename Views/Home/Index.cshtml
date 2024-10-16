@@ -30,8 +30,8 @@
             @foreach (var course in Model)
             {
                 <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <a href="@Url.Action("GetItem", "Course", new { id = course.Id })" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow-sm justify-content-between">
+                        <a href="@Url.Action("Details", "Home", new { courseId = course.Id })" class="text-decoration-none text-dark">
                         <!-- Badge and Image -->
                         <div class="position-relative">
                             <span class="badge bg-info position-absolute top-0 end-0 m-2">@course.FieldOfStudy</span>
@@ -56,7 +56,7 @@
                         </div>
 
                         <!-- Action Button -->
-                        <div class="card-footer bg-transparent text-center">
+                        <div class="card-footer bg-transparent text-center ">
                             <a class="btn btn-outline-primary w-100" onclick="AddToCart('/cart/addtocart?courseId=@course.Id')">Add To Cart</a>
                         </div>
                     </div>

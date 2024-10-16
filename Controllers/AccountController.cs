@@ -64,14 +64,30 @@ namespace E_learning_Platform.Controllers
                 UserName = $"{userRegister.FirstName}-{userRegister.LastName}{Guid.NewGuid().ToString().Substring(0, 4)}"
             };
             var result = await _userManager.CreateAsync(user, userRegister.Password);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                var role = await _roleManager.FindByIdAsync(selectedRoleId);
-                await _userManager.AddToRoleAsync(user, role?.Name ?? "test");
+                UserRegisterViewModel userRegisterViewModel = new UserRegisterViewModel
+                {
+                    Roles = _roleManager.Roles
+                    .Select(x => new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    }),
+                };
+				foreach (var error in result.Errors)
+					ModelState.AddModelError(error.Code, error.Description);
+
+                return View(userRegisterViewModel);
             }
+            var role = await _roleManager.FindByIdAsync(selectedRoleId);
+            await _userManager.AddToRoleAsync(user, role?.Name ?? "test");
             await _signInManager.PasswordSignInAsync(user, userRegister.Password, false, false);
 
-            return Redirect(returnUrl ?? "/");
+            if (await _userManager.IsInRoleAsync(user, "admin"))
+                return RedirectToAction("Index", "Admin");
+            else
+                return Redirect(returnUrl ?? "/");
 
         }
 
@@ -94,8 +110,11 @@ namespace E_learning_Platform.Controllers
 					var result = await _signInManager.PasswordSignInAsync(user, userLogin.Password, false, false);
 					if (result.Succeeded)
 					{
-						return Redirect(returnUrl ?? "/");
-					}
+						if (await _userManager.IsInRoleAsync(user, "admin"))
+							return RedirectToAction("Index", "Admin");
+						else
+                            return Redirect(returnUrl ?? "/");
+                    }
 				}
 				ModelState.AddModelError("", "Invaild Email or Password");
 			}

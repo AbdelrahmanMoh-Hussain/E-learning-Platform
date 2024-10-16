@@ -54,7 +54,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "python.jpg",
                     FieldOfStudy = "Computer Science",
                     InstructorName = "John Doe",
-                    Price = 199.99m
+                    Price = 199.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=kqtD5dpn9C8&ab_channel=ProgrammingwithMosh"
                 },
                 new Course
                 {
@@ -65,7 +66,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "digital_marketing.jpg",
                     FieldOfStudy = "Marketing",
                     InstructorName = "Jane Smith",
-                    Price = 149.99m
+                    Price = 149.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=nU-IIXBWlS4&ab_channel=Simplilearn"
                 },
                 new Course
                 {
@@ -76,7 +78,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "data_science.jpg",
                     FieldOfStudy = "Data Science",
                     InstructorName = "Dr. Sarah Lee",
-                    Price = 499.99m
+                    Price = 499.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=ua-CiDNNj30&ab_channel=Simplilearn"
                 },
                 new Course
                 {
@@ -87,7 +90,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "creative_writing.jpg",
                     FieldOfStudy = "Literature",
                     InstructorName = "Robert Martin",
-                    Price = 129.99m
+                    Price = 129.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=b2fyFJ_GHz8&ab_channel=TheCreativePenn"
                 },
                 new Course
                 {
@@ -98,7 +102,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "financial_accounting.jpg",
                     FieldOfStudy = "Finance",
                     InstructorName = "Anna Brown",
-                    Price = 299.99m
+                    Price = 299.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=YYFb82XDpAc&ab_channel=AccountingStuff"
                 },
                 new Course
                 {
@@ -109,7 +114,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "javascript.jpg",
                     FieldOfStudy = "Computer Science",
                     InstructorName = "Michael Johnson",
-                    Price = 249.99m
+                    Price = 249.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=QO4NXhWo_NM&ab_channel=TraversyMedia"
                 },
                 new Course
                 {
@@ -120,7 +126,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "uiux.jpg",
                     FieldOfStudy = "Design",
                     InstructorName = "Emily Clark",
-                    Price = 179.99m
+                    Price = 179.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=nU-IIXBWlS4&ab_channel=Simplilearn"
                 },
                 new Course
                 {
@@ -131,7 +138,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "project_management.jpg",
                     FieldOfStudy = "Management",
                     InstructorName = "David Williams",
-                    Price = 199.99m
+                    Price = 199.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=_ljLREvx5zo&ab_channel=Simplilearn"
                 },
                 new Course
                 {
@@ -142,7 +150,8 @@ namespace E_learning_Platform.Data
                     ImageUrl = "photoshop.jpg",
                     FieldOfStudy = "Design",
                     InstructorName = "Sophia White",
-                    Price = 159.99m
+                    Price = 159.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=nU-IIXBWlS4&ab_channel=Simplilearn"
                 },
                 new Course
                 {
@@ -153,8 +162,10 @@ namespace E_learning_Platform.Data
                     ImageUrl = "cryptocurrency.jpg",
                     FieldOfStudy = "Finance",
                     InstructorName = "Chris Thompson",
-                    Price = 399.99m
+                    Price = 399.99m,
+                    VideoUrl = "https://www.youtube.com/watch?v=SSo_EIwHSd4&ab_channel=Simplilearn"
                 }
+
             );
         }
     }
