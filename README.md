@@ -4,15 +4,15 @@ Welcome to the **E-learning Platform** project! Below you'll find the key featur
 
 ## Table of Contents 📑
 1. [Database Schema](#database-schema-%EF%B8%8F)
-2. [Pages Design](#pages-design-🖼️)
-    - [Sign Up](#sign-up)
-    - [Log In](#log-in)
-    - [Admin Dashboard](#admin-dashboard)
-    - [Cart](#cart)
-    - [Course Details](#course-details)
-    - [Home Page](#home-page)
-    - [Profile](#profile)
-    - [Course Progress](#course-progress)
+2. [Pages Design](#pages-design-%EF%B8%8F)
+    - [Sign Up](#sign-up- )
+    - [Log In](#log-in-)
+    - [Admin Dashboard](#admin-dashboard-%EF%B8%8F)
+    - [Cart](#cart-)
+    - [Course Details](#course-details-)
+    - [Home Page](#home-page-)
+    - [Profile](#profile-)
+    - [Course Progress](#course-progress-)
 
 ## Database Schema 🗂️
 The platform's database schema manages user accounts, courses, and user progress. 
