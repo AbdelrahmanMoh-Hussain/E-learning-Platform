@@ -3,7 +3,7 @@
 Welcome to the **E-learning Platform** project! Below you'll find the key features of the platform along with visual representations. This project provides a seamless user experience for course management, user profiles, and real-time progress tracking.
 
 ## Table of Contents 📑
-1. [Database Schema](#database-schema-🗂️)
+1. [Database Schema](#database-schema-)
 2. [Pages Design](#pages-design-🖼️)
     - [Sign Up](#sign-up)
     - [Log In](#log-in)
