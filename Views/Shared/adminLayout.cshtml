@@ -11,7 +11,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" asp-controller="Admin" asp-action="Index">Admin Dashboard</a>
         <div class="collapse navbar-collapse" >
-            <ul class="navbar-nav d-flex">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="navbar-nav d-flex" id="navbarNav">
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="Index">Home Page</a>
                 </li>
@@ -26,6 +29,7 @@
                 </li>
             </ul>
 
+
         </div>
     </nav>
     <div class="container mt-4">
@@ -33,6 +37,8 @@
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

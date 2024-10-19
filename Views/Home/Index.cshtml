@@ -17,7 +17,7 @@
     <form asp-action="Index" method="get" class="d-flex justify-content-center">
         <div class="input-group w-50 shadow-sm">
             <input type="text" class="form-control" placeholder="Search courses..." name="searchString"
-                   onkeyup="performSearch()" value="@ViewData["CurrentFilter"]" aria-label="Search">
+                   @* onkeyup="performSearch()" *@ value="@ViewData["CurrentFilter"]" aria-label="Search">
             <button type="submit" class="btn btn-dark">Search</button>
         </div>
     </form>

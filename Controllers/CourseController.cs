@@ -38,7 +38,7 @@ namespace E_learning_Platform.Controllers
                 courseRepository.Create(courseFromReq);
                 courseRepository.saveChanges();
 
-                //go to home 
+                //go to home
                 List<Course> courses = courseRepository.GetAll();
                 return View("Index", courses);
             }
@@ -69,9 +69,7 @@ namespace E_learning_Platform.Controllers
                 return RedirectToAction("Index", courseRepository.GetAll());
             }
 
-            return View("Edit", courseFromReq);
-
-            
+            return View("Edit", courseFromReq); 
         }
     }
 }
