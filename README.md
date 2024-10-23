@@ -13,6 +13,7 @@ Welcome to the **E-learning Platform** project! Below you'll find the key featur
     - [Home Page](#home-page-)
     - [Profile](#profile-)
     - [Course Progress](#course-progress-)
+ 3. [Demo Video](#demo-video)
 
 ## Database Schema 🗂️
 The platform's database schema manages user accounts, courses, and user progress. 
@@ -79,3 +80,7 @@ Users can track their learning journey through real-time progress updates. The p
 ![Course Progress](https://github.com/user-attachments/assets/72815bfe-3d8f-4192-b281-7d99fd836104)
 
 ---
+
+## Demo Video
+[Watch out](https://drive.google.com/file/d/10hGgO31rit3bbYlFCMOGwvhAquIWIxld/view)
+
